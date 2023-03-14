@@ -5,7 +5,7 @@ import { AiFillHome, AiFillStar, AiOutlineSearch, AiOutlinePlus } from 'react-ic
 import { FaTape } from 'react-icons/fa'
 import { MdMonitor } from 'react-icons/md'
 import { auth, provider } from '../firebase'
-import { signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth'
 
 const Header = () => {
     const location = useLocation()
@@ -17,12 +17,18 @@ const Header = () => {
         }
     }
 
-    const [value, setValue] = useState('')
-   async function handleAuth() {
-        const result = await signInWithPopup(auth, provider)
-        const user = result.user
-        console.log(user.displayName)
-        navigate('/Home')
+
+    async function handleAuth() {
+        try {
+            const auth = getAuth()
+            const provider = new GoogleAuthProvider()
+            const result = await signInWithPopup(auth, provider)
+            const user = result.user
+            console.log(user.displayName)
+            navigate('/Home')
+        } catch (error) {
+            alert(error)
+        }
     }
 
 
