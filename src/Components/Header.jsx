@@ -1,15 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../images/logo.svg'
 import { AiFillHome, AiFillStar, AiOutlineSearch, AiOutlinePlus } from 'react-icons/ai'
 import { FaTape } from 'react-icons/fa'
 import { MdMonitor } from 'react-icons/md'
-import { auth, provider } from '../firebase'
-import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth'
+import { auth, db, provider } from '../firebase'
+import { GoogleAuthProvider, signInWithPopup, getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getDoc, serverTimestamp, setDoc, doc } from 'firebase/firestore'
 
 const Header = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    const [pagestate,setPageState] = useState('/LoginPage')
+    const auth = getAuth()
+
+    useEffect(()=>
+    {
+      onAuthStateChanged(auth,(user)=>
+      {
+        if(user)
+        {
+       setPageState('Profile')
+        }
+        else
+        {
+          setPageState('Login')
+        }
+      })
+    },[auth])
+
 
     function pathMatchRoute(route) {
         if (route === location.pathname) {
@@ -18,18 +37,11 @@ const Header = () => {
     }
 
 
-    async function handleAuth() {
-        try {
-            const auth = getAuth()
-            const provider = new GoogleAuthProvider()
-            const result = await signInWithPopup(auth, provider)
-            const user = result.user
-            console.log(user.displayName)
-            navigate('/Home')
-        } catch (error) {
-            alert(error)
-        }
+    async function onClick() {
+      navigate('/LogInDetails')
     }
+
+
 
 
     return (
@@ -48,45 +60,45 @@ const Header = () => {
                         </li>
 
                         <li
-                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Home") && "border-b-[3px] "
+                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]   && "border-b-[3px] "
                                 }`}
-                            onClick={() => navigate("/Home")}
+                            onClick={() => navigate("")}
                         >
                             <AiOutlineSearch />  Search
                         </li>
 
 
                         <li
-                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Home") && "border-b-[3px] "
+                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Watchlist") && "border-b-[3px] "
                                 }`}
-                            onClick={() => navigate("/Home")}
+                            onClick={() => navigate("/WatchList")}
                         >
                             <AiOutlinePlus /> WatchList
                         </li>
 
 
                         <li
-                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Home") && "border-b-[3px] "
+                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Originals") && "border-b-[3px] "
                                 }`}
-                            onClick={() => navigate("/Home")}
+                            onClick={() => navigate("/Originals")}
                         >
                             <AiFillStar /> originals
                         </li>
 
 
                         <li
-                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Home") && "border-b-[3px] "
+                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Movies") && "border-b-[3px] "
                                 }`}
-                            onClick={() => navigate("/Home")}
+                            onClick={() => navigate("/Movies")}
                         >
                             <FaTape /> Movies
                         </li>
 
 
                         <li
-                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Home") && "border-b-[3px] "
+                            className={` uppercase tracking-[0.2px] flex items-center gap-2 cursor-pointer py-3 text-sm font-semibold text-white hover:border-b-[3px]  ${pathMatchRoute("/Series") && "border-b-[3px] "
                                 }`}
-                            onClick={() => navigate("/Home")}
+                            onClick={() => navigate("/Series")}
                         >
                             <MdMonitor /> Series
                         </li>
@@ -94,7 +106,7 @@ const Header = () => {
                     </ul>
                 </li>
                 <li className='mr-4'>
-                    <button onClick={handleAuth} className='mr-3 border-[1px] border-white px-3 py-2 rounded-md font-semibold uppercase hover:text-[#040714] hover:bg-white transition duration-200 ease-in-out tracking-[2px] '>Login</button>
+                    <button onClick={onClick} className={`mr-3 border-[1px] border-white px-3 py-2 rounded-md font-semibold uppercase hover:text-[#040714] hover:bg-white transition duration-200 ease-in-out tracking-[2px] ${(pathMatchRoute('/Profile') || pathMatchRoute('/LoginPage'))}`}>{pagestate}</button>
                 </li>
             </ul>
         </nav>
