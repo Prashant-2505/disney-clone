@@ -18,11 +18,9 @@ function App() {
           <Route path='/' element={<Login />}></Route>
           <Route path='/Home' element={<Home />}></Route>
           <Route path='/LoginPage' element={<LoginPage />}></Route>
-        
           <Route path='/LogInDetails' element={<PrivateRoute/>}>
            <Route path='/LogInDetails' element={<LogInDetails/>}/>
           </Route>
-
         </Routes>
       </Router>
     </div>

@@ -1,0 +1,26 @@
+.slider
+{
+    margin-top: 30px;
+    max-width: 90vw;
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.slider button
+{
+   opacity: 0.2;
+}
+.slider button:hover
+{
+    opacity: 5;
+}
+.slider ul li button::before{
+   font-size: 10px;
+   color: rgb(248, 248, 248);
+}
+
+
+.slick-list
+{
+    overflow: intial;
+}

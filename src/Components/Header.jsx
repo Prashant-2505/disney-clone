@@ -45,7 +45,7 @@ const Header = () => {
 
 
     return (
-        <nav className='flex flex-col justify-center sticky top-0 left-0 right-0 h-[70px] z-30'>
+        <nav className='flex flex-col justify-center sticky top-0 left-0 right-0 h-[70px] z-10 bg-black'>
             <ul className='flex justify-between items-center flex-wrap'>
                 <li className='flex'>
                     <img onClick={() => navigate('/')} className='h-[50px] mr-6 ml-5 my-2 cursor-pointer' src={logo} alt="" />
@@ -110,6 +110,8 @@ const Header = () => {
                 </li>
             </ul>
         </nav>
+        
+        
 
     )
 }
