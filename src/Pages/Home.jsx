@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import ImgSlider from '../Components/ImgSlider';
+import Recomend from '../Components/Recomend';
 import Viewers from '../Components/Viewers';
 import backgroundImg from '../images/home-background.png';
 
@@ -11,6 +12,7 @@ const Home = () => {
       <span className=' invisible'>h</span>
       <ImgSlider />
       <Viewers/>
+      <Recomend/>
     </div>
 
 
