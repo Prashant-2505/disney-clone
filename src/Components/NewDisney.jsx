@@ -1,16 +1,21 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { db } from '../firebase'
+import { db } from '../firebase';
+import backgroundImg from '../images/home-background.png';
 import img1 from '../images/viewers-disney.png'
 import img2 from '../images/viewers-marvel.png'
 import img3 from '../images/viewers-national.png'
 import img4 from '../images/viewers-pixar.png'
 import img5 from '../images/viewers-starwars.png'
-import Spinner from './Spinner'
+import Spinner from './Spinner';
 
-function Recomend() {
-    const main = ` mt-[7%]`
+function NewDisney(newDisneys) {
+    const main = ` mt-[7%]
+    h-full
+    bg-cover
+    bg-no-repeat
+    `
 
     const parentDiv = `
     pt-4
@@ -30,14 +35,13 @@ function Recomend() {
      transition
      duration-[200ms]
      ease-in-out
-    relative
+     relative
     `
-    const imgStyle = `
-    w-full 
-    block
-    cover
+    const imgStyle = ` 
+    w-full
+    object-cover
     transition
-    duration-2
+    duration-200
     hover:shadow-lg
     hover:shadow-[#07060A]
     hover:border-2 
@@ -45,15 +49,16 @@ function Recomend() {
     rounded-md
     opacity-60
     `
-    const movieTitle =
-    `
-    absolute
-    bottom-0
-    text-lg
-    left-2
+
+    const movieTitle=
+    `  absolute
+      bottom-0 
+      left-2
+      text-lg
     `
 
-    const [Recommend, setRecommend] = useState([]);
+
+    const [Disney, setDisney] = useState([]);
     const [loading, setLoading] = useState(true)
     useEffect(() => {
         async function fetchMovie() {
@@ -62,12 +67,12 @@ function Recomend() {
                 const snapShot = await getDocs(colRef)
                 let movies = []
                 snapShot.forEach((doc) => {
-                    if (doc.data().type === 'recommend')
+                    if (doc.data().type === 'new')
                         movies.push({
                             ...doc.data(), id: doc.id
                         })
                 })
-                setRecommend(movies)
+                setDisney(movies)
                 setLoading(false)
             }
             catch (error) {
@@ -78,15 +83,16 @@ function Recomend() {
         fetchMovie();
     }, [])
 
+
     return (
         <main className={main}>
-            <h1>Recommended Shows</h1>
+            <h1>New Disney Shows</h1>
 
             <div className={parentDiv}>
                 {loading ? (
-                    <Spinner/>
+                   <Spinner/>
                 ) : (
-                    Recommend.map((movie) => (
+                    Disney.map((movie) => (
                         <div className={childDiv}>
                             <Link to={'/detail/' + movie.id}>
                                 <img className={imgStyle} src={movie.cardImg} alt="" />
@@ -100,4 +106,61 @@ function Recomend() {
     )
 }
 
-export default Recomend
+export default NewDisney
+
+
+{/* <main className={main} >
+<h1>New Disney Shows</h1>
+
+<div className={parentDiv}>
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img1} alt="" />
+      </Link>
+  </div>
+
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img2} alt="" />
+      </Link>
+  </div>
+
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img3} alt="" />
+      </Link>
+  </div>
+
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img4} alt="" />
+      </Link>
+  </div>
+
+</div>
+</main> */}
+
+
+{/* <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img1} alt="" />
+      </Link>
+  </div>
+
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img2} alt="" />
+      </Link>
+  </div>
+
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img3} alt="" />
+      </Link>
+  </div>
+
+  <div className={childDiv}>
+      <Link to ='/'>
+          <img className={imgStyle} src={img4} alt="" />
+      </Link>
+  </div> */}

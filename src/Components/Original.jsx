@@ -1,16 +1,21 @@
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { db } from '../firebase'
+import { db } from '../firebase';
+import backgroundImg from '../images/home-background.png';
 import img1 from '../images/viewers-disney.png'
 import img2 from '../images/viewers-marvel.png'
 import img3 from '../images/viewers-national.png'
 import img4 from '../images/viewers-pixar.png'
 import img5 from '../images/viewers-starwars.png'
-import Spinner from './Spinner'
+import Spinner from './Spinner';
 
-function Recomend() {
-    const main = ` mt-[7%]`
+function Original() {
+    const main = ` mt-[7%]
+    h-full
+    bg-cover
+    bg-no-repeat
+    `
 
     const parentDiv = `
     pt-4
@@ -31,6 +36,7 @@ function Recomend() {
      duration-[200ms]
      ease-in-out
     relative
+   
     `
     const imgStyle = `
     w-full 
@@ -45,59 +51,61 @@ function Recomend() {
     rounded-md
     opacity-60
     `
-    const movieTitle =
-    `
+    
+    const movieTitle=
+    `  text-center
     absolute
     bottom-0
-    text-lg
     left-2
-    `
+      `
 
-    const [Recommend, setRecommend] = useState([]);
+    const [original, setoriginal] = useState([]);
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         async function fetchMovie() {
             try {
-                const colRef = collection(db, 'movies')
-                const snapShot = await getDocs(colRef)
+                const colref = collection(db, 'movies')
+                const snapshot = await getDocs(colref)
                 let movies = []
-                snapShot.forEach((doc) => {
-                    if (doc.data().type === 'recommend')
+                snapshot.forEach((doc) => {
+                    if (doc.data().type === 'original') {
                         movies.push({
                             ...doc.data(), id: doc.id
                         })
+                    }
                 })
-                setRecommend(movies)
+                setoriginal(movies)
                 setLoading(false)
             }
             catch (error) {
                 console.log(error)
             }
         }
-
-        fetchMovie();
-    }, [])
+        fetchMovie()
+    },[])
 
     return (
         <main className={main}>
-            <h1>Recommended Shows</h1>
+    <h1>Originals Shows</h1>
 
-            <div className={parentDiv}>
-                {loading ? (
-                    <Spinner/>
-                ) : (
-                    Recommend.map((movie) => (
-                        <div className={childDiv}>
-                            <Link to={'/detail/' + movie.id}>
-                                <img className={imgStyle} src={movie.cardImg} alt="" />
-                            </Link>
-                            <p className={movieTitle}>{movie.title}</p>
-                        </div>
-                    ))
-                )}
-            </div>
-        </main>
+    <div className={parentDiv}>
+        {loading ? (
+            <Spinner/>
+        ) : (
+            original.map((movie) => (
+                <div className={childDiv}>
+                    <Link to={'/detail/' + movie.id}>
+                        <img className={imgStyle} src={movie.cardImg} alt="" />
+                    </Link>
+                    <p className={movieTitle}>{movie.title}</p>
+                </div>
+            ))
+        )}
+    </div>
+</main>
+      
     )
 }
 
-export default Recomend
+export default Original

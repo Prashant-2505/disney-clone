@@ -21,6 +21,8 @@ function App() {
           <Route path='/LogInDetails' element={<PrivateRoute/>}>
            <Route path='/LogInDetails' element={<LogInDetails/>}/>
           </Route>
+          <Route path='/MovieDetails:type' element={<LoginPage/>}/>
+
         </Routes>
       </Router>
     </div>

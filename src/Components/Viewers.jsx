@@ -46,7 +46,7 @@ function Viewers() {
   border-[1px]
   border-[rgba(249,249,249,0.1)]
   mt-5
-  mb-4
+  mb-2
   `
  
   return (
