@@ -22,6 +22,7 @@ const Home = () => {
       <Viewers />
       <Recomend />
       <NewDisney />
+      <Trending/>
       <Original />
       {/* <Trending /> */}
     </div>

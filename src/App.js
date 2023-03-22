@@ -8,7 +8,7 @@ import PrivateRoute from "./Components/PrivateRoute";
 import Home from "./Pages/Home";
 import LogInDetails from "./Pages/LogInDetails";
 import { LoginPage } from "./Pages/LoginPage";
-
+import MoviDetails from './Components/MoviDetails'
 function App() {
   return (
     <div className="App">
@@ -21,7 +21,7 @@ function App() {
           <Route path='/LogInDetails' element={<PrivateRoute/>}>
            <Route path='/LogInDetails' element={<LogInDetails/>}/>
           </Route>
-          <Route path='/MovieDetails:type' element={<LoginPage/>}/>
+          <Route path='/detail/:id' element={<MoviDetails/>}/>
 
         </Routes>
       </Router>

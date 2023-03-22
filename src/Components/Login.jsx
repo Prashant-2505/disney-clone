@@ -7,7 +7,7 @@ const Login = () => {
 
    return (
       <div className='overflow-hidden flex flex-col text-center h-full'>
-         <div className='flex mb-[10vw] w-full relative min-h-[100vh] justify-center items-center flex-col px-[8px] py-[40px] h-full -z-5' style={{
+         <div className='flex  w-full relative min-h-[100vh] justify-center items-center flex-col px-[8px] py-[40px] h-full -z-5' style={{
             backgroundImage: `url(${backgroundImg})`, height: '100%', width: '100%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover',opacity:'0.7'
          }}>
             <div className='h-full w-full flex items-center justify-center mb-[2vw] max-w-[659px] flex-col mx-auto '>
